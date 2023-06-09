@@ -1,0 +1,11 @@
+<header class="w-100 row align-items-center justify-content-between pt-4 text-white {% if request.path != "/" %}pb-4 anonym-header bg-dark{% endif %}">
+    <div class="col-3"></div>
+    <div class="col-6 d-flex justify-content-center">
+        <ul class="nav justify-content-center align-items-center">
+            <li class="nav-item btn {% if request.path == "/streamers" %} btn-primary{% else %} btn-outline-light{% endif %}"><a class="nav-link text-white fs-4" href="streamers">Стримеры</a></li>
+            <li class="nav-item"><a class="nav-link p-4 mx-4" href="/"><img class="title" src="static/images/Название.png"></a></li>
+            <li class="nav-item btn {% if request.path == "/about" %} btn-primary{% else %} btn-outline-light{% endif %}"><a class="nav-link text-white fs-4" href="about">О нас</a></li>
+        </ul>
+    </div>
+    <div class="col-3 d-flex justify-content-end">{% include 'user.html' %}</div>
+</header>

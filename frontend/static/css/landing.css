@@ -1,0 +1,289 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+    display: flex;
+    flex-flow: column;
+    min-height: 100vh;
+}
+
+h2.user {
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 34px;
+    color: white;
+
+    margin-left: 18px;
+    margin-bottom: 0;
+}
+
+a.twitch-login {
+    background-color: white;
+    display: flex;
+    padding: 16px 0;
+    border-radius: 25px;
+    width: 400px;
+    text-decoration: none;
+}
+
+a.twitch-login > img {
+    margin-left: 25px;
+}
+
+a.twitch-login > p {
+    margin: auto;
+    font-size: 24px;
+    line-height: 29px;
+    color: #9B5CFF;
+    font-weight: 700;
+}
+
+h2 {
+    margin-bottom: 100px;
+}
+
+h3 {
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 30px;
+}
+
+.main-page {
+    height: 100vh;
+    background: linear-gradient(0deg, rgba(155, 92, 255, 0.6), rgba(155, 92, 255, 0.6)), url(../images/background.gif);
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: column;
+    align-items: center;
+    color: white;
+}
+
+.anonym-header {
+
+}
+
+.title {
+    margin: auto 50px;
+}
+
+.anonym-header .title {
+    height: 100px;
+    padding: 0;
+}
+
+.logo-container {
+    border-radius: 100%;
+    background-color: #9B5CFF;
+    position: absolute;
+    padding: 249px 69px 69px 249px;
+    left: -200px;
+    top: -200px;
+}
+
+.offer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.offer-container > .chat {
+    height: 63.8vh;
+    width: 300px;
+    border-radius: 25px;
+}
+
+.offer-container .chat.black {
+    background-image: url(../images/black-chat.gif);
+}
+.offer-container .chat.white {
+    background-image: url(../images/white-chat.gif)
+}
+
+.offer {
+    width: 530px;
+    margin: auto 134px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.offer > * {
+    margin-bottom: 50px;
+}
+
+.offer > p {
+    font-size: 18px;
+    line-height: 32px;
+}
+
+.bookmark {
+    /* position: absolute; */
+    bottom: 0;
+    padding: 24px 150px;
+    background-color: #531EA6;
+    font-size: 25px;
+    line-height: 30px;
+    height: 11%;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+
+.bookmark > img {
+    height: 50%;
+}
+
+section.content {
+    padding: 112px 0;
+    display: flex;
+    flex-flow: column;
+
+    background: url(../images/content-background.png);
+    background-size: 100% cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
+
+.functions-container {
+    width: 89%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.function {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.function .icon {
+    width: 133px;
+    height: 133px;
+    margin-right: 77px;
+}
+
+.function h3 {
+    margin-bottom: 21px;
+}
+
+.function .example {
+    margin-right: 60px;
+    border-radius: 10px;
+}
+
+.function p {
+    font-size: 18px;
+    width: 400px;
+    line-height: 178%;
+}
+
+.paw {
+    position: absolute;
+    top: 80vh;
+    right: -100px;
+    z-index: -1;
+}
+
+.advantages-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+
+    margin: 190px 0 111px;
+}
+
+.advantages {
+    display: flex;
+}
+
+.advantages .advantage:nth-child(2) {
+    margin: 0 63px;
+}
+
+.advantage {
+    width: 400px;
+    display: flex;
+    flex-flow: column;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.advantage > img {
+    height: 169px;
+    margin-bottom: 44px;
+}
+
+.advantage > h3 {
+    margin-bottom: 33px;
+    font-size: 31px;
+
+    width: 400px;
+
+    text-align: center;
+}
+
+.advantage > p {
+    font-size: 18px;
+    line-height: 178%;
+    text-align: center;
+    margin-bottom: 33px;
+    width: 280px;
+}
+
+footer {
+    height: 480px;
+    background-color: #531EA6;
+    color: white;
+
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-top: auto;
+}
+
+footer.anonym {
+    padding-top: 100px;
+    height: 300px;
+}
+
+.sub-footer {
+    padding: 35px 87px 45px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+
+    background: #9C5CFF;
+    border-radius: 10px;
+
+    position: relative;
+    top: -115px;
+}
+
+.sub-offer {
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 48px;
+
+    margin-bottom: 44px;
+}
+
+.socials > a:nth-child(1) {
+    margin-right: 80px;
+}
+
+.contacts {
+    display: flex;
+    justify-content: space-between;
+    width: 1112px;
+
+    margin: auto 0 68px
+}

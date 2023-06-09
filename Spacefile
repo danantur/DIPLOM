@@ -1,0 +1,15 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: application
+    src: ./frontend
+    engine: python3.9
+    primary: true
+    dev: uvicorn main:app
+    public: true
+    path: /
+  - name: testing
+    src: ./
+    engine: python3.9
+    dev: uvicorn main:app
+    path: /tests

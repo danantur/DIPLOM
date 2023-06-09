@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+
+{% block links %}
+<link rel="stylesheet" href="static/css/landing.css">
+{% endblock %}
+
+{% block title %}Стримеры{% endblock %}
+
+{% block content %}
+{% include 'pages/anonym_header.html' %}
+
+<div class="container py-3">
+  {% for streamer in streamers %}
+      <div class="card mb-3">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{streamer.thumbnail_url}}" class="img-fluid rounded-start" alt="{{streamer.user.name}}">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{streamer.title}}</h5>
+              <p class="card-text">Количество зрителей: {{streamer.viewer_count}}</p>
+              <p class="card-text"><small class="text-body-secondary">Стрим начался в: {{streamer.started_at}}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+  {% endfor %}
+</div>
+
+{% include 'pages/anonym_footer.html' %}
+{% endblock %}

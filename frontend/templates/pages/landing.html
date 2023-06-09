@@ -1,0 +1,96 @@
+{% extends 'index.html' %}
+
+{% block links %}
+<link rel="stylesheet" href="static/css/landing.css">
+{% endblock %}
+
+{% block title %}Slonbot{% endblock %}
+
+{% block content %}
+    <section class="main-page">
+            <div class="logo-container">
+                <img class="logo" src="static/images/Лого.png" alt="SLONBOt">
+            </div>
+        {% include 'pages/anonym_header.html' %}
+        <div class="offer-container">
+            <div class="chat black"></div>
+            <div class="offer">
+                <h2>И слон, и бот, и кот!</h2>
+                <p>Получите доступное решение для множества модераторских и развлекательных задач в одном помошнике. Вдохновлен любительскими наработками и существующими решениями.</p>
+                <a class="twitch-login" href="profile">
+                    <img src="static/images/twitch-logo.svg">
+                    <p>Зайти через твич</p>
+                </a>
+            </div>
+            <div class="chat white"></div>
+        </div>
+        <div class="bookmark">
+            <p>Что же он умеет?</p>
+            <img src="static/images/Arrow.svg">
+        </div>
+    </section>
+    <section class="content">
+        <section class="functions-container">
+
+            <h2 class="display-4">Основные функции</h2>
+
+            <div class="functions">
+                <div class="function">
+                    <img class="icon" src="static/images/info.svg">
+                    <img class="example" src="static/images/example.gif">
+                    <div>
+                        <h3>Выдача информации</h3>
+                        <p>Срочно нужно найти клип, узнать курс доллара или посмотреть время в определённом населённом пункте? Просто воспользуйтесь командой.</p>
+                    </div>
+                </div>
+                <div class="function">
+                    <img class="icon" src="static/images/templates.svg">
+                    <img class="example" src="static/images/example2.gif">
+                    <div>
+                        <h3>Динамические шаблоны</h3>
+                        <p>С помощью умного парсера шаблонов и списков из шаблонов делайте команды с предсказаниями с 1000 возможными выводами.</p>
+                    </div>
+                </div>
+                <div class="function">
+                    <img class="icon" src="static/images/statistics.svg">
+                    <img class="example" src="static/images/example3.gif">
+                    <div>
+                        <h3>Статистика</h3>
+                        <p>Бот собирает информацию о каждом пользователе и о трансляции, а также может подсчитать статистику по каждому пользователю из данных твича!</p>
+                    </div>
+                </div>
+                <div class="function">
+                    <img class="icon" src="static/images/moderator.svg">
+                    <img class="example" src="static/images/example4.gif">
+                    <div>
+                        <h3>Модераторские функции</h3>
+                        <p>Довольно обыденные вещи, как временное отсранение от чата за спам, так и сложные, по типу бана всех пользователей, написавших определённое слово за 5 минут</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <img class="paw" src="static/images/paw 1.svg">
+        <section class="advantages-container">
+            <h2 class="display-4">Преймущества</h2>
+            <div class="advantages">
+                <div class="advantage">
+                    <img src="static/images/bookshelf.png">
+                    <h3>Ничего лишнего</h3>
+                    <p>Только реально востребованные команды, протестированные на реальной аудитории</p>
+                </div>
+                <div class="advantage">
+                    <img src="static/images/ui.png">
+                    <h3>Интуитивный интерфейс</h3>
+                    <p>Продуманный интерфейс панели администратора для удобства работы с ней</p>
+                </div>
+                <div class="advantage">
+                    <img src="static/images/server.png">
+                    <h3>Отказоустойчивость</h3>
+                    <p>В проекте используются надёжные сервера, а также используется множество стабилизирующих алгоритмов</p>
+                </div>
+            </div>
+        </section>
+    </section>
+    {% include 'pages/anonym_footer.html' %}
+
+{% endblock %}
