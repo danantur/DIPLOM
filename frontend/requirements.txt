@@ -1,8 +1,0 @@
-uvicorn
-fastapi
-twitchio
-jinja2
-deta
-fastapi-sessions
-httpx
-pydantic

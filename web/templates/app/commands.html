@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+
+{% block links %}
+<link rel="stylesheet" href="/static/css/commands-styles.css">
+{% endblock %}
+
+{% block title %}Команды{% endblock %}
+
+{% block content %}
+    {% include 'components/app_header.html' %}
+    <section class="container commands-container">
+        <table class="table table-light table-bordered commands">
+
+            <colgroup>
+                <col class="name"/>
+                <col class="description"/>
+                <col class="returns"/>
+                <col class="cooldown"/>
+                <col class="state"/>
+              </colgroup>
+
+            <tr>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Вывод</th>
+                <th>КД</th>
+                <th>Сост.</th>
+            </tr>
+
+            {% for name, cmd in commands.items() %}
+
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{cmd.description}}</td>
+                    <td>{{cmd.result}}</td>
+                    <td>{{cmd.get("kd", 10)}}</td>
+                    <td>{% if cmd.get("enabled", True) %}Вкл{% else %}Выкл{% endif %}</td>
+                </tr>
+
+            {% endfor %}
+
+        </table>
+        <p class="copyright">© 2023 Slonbot. Все права защищены.</p>
+    </section>
+{% endblock %}

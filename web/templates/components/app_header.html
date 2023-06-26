@@ -1,0 +1,19 @@
+<header class="container-fluid d-flex">
+    <div class="row w-100 align-items-center justify-content-between">
+        <div class="col-3 d-flex align-items-center">
+            <a class="logo-container" href="/">
+                <img class="logo" src="/static/images/Лого.png">
+            </a>
+            {% if channel %}
+                <a class="link ms-3" href="https://twitch.tv/{{channel}}"><h2>{{channel}}</h2></a>
+            {% endif %}
+            <h1>{{page}}</h1>
+        </div>
+    {% if request.path == "/commands" %}
+    <div class="col-6 d-none justify-content-center">
+        <label for="searcher"><input type="search" id="searcher" placeholder="Поиск.."></label>
+    </div>
+    {% endif %}
+    {% include 'components/user.html' %}
+    </div>
+</header>

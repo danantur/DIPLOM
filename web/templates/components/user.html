@@ -1,0 +1,15 @@
+<div class="col-3 d-flex justify-content-end">
+    {% if request.user.is_authenticated %}
+        <div class="d-flex align-items-center">
+            <a class="link" href="/auth/logout"><h2 class="user">Выйти</h2></a>
+            <a class="link d-flex align-items-center" href="/profile">
+                <h2 class="user text-white mx-3">{{request.user.display_name}}</h2>
+                <img class="me-3" style="height: 70px; border-radius: 50%; border: solid 3px white" src="{{request.user.profile_image}}">
+            </a>
+        </div>
+    {% else %}
+        {% if request.path != "/" %}
+        <a class="btn btn-outline-light nav-link text-white fs-4 me-4" href="/profile">Войти</a>
+        {% endif %}
+    {% endif %}
+</div>

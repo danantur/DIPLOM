@@ -1,0 +1,101 @@
+{% extends 'index.html' %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block links %}
+<link rel="stylesheet" href="static/css/commands-styles.css">
+{% endblock %}
+
+{% block content %}
+{% include 'components/app_header.html' %}
+<div class="d-flex justify-content-center align-items-center" style="flex:1">
+  <div class="card m-auto" style="border-radius: 15px;">
+    <div class="container card-body p-4">
+      <div class="d-flex text-black">
+
+        <div class="flex-shrink-0 d-flex flex-column align-items-center me-4">
+          <img src="{{request.user.profile_image}}"
+            alt="{{request.user.display_name}}" class="img-fluid"
+            style="width: 300px; border-radius: 10px;">
+            <h5 class="mt-4 mb-1 fs-3 fw-bolder text-black" style="--bs-text-opacity: .6;">{{request.user.display_name}}</h5>
+        </div>
+
+        <div class="vr"></div>
+
+        <div class="d-flex flex-column flex-grow-1 align-items-center ms-4">
+          <form name="user_settings" action="/api/edit_user" class="flex-grow-1 w-100 py-4">
+            {% for name, setting in settings.items() %}
+              {% if setting.default.__class__.__name__ == "bool" %}
+
+              <div class="row mb-5 form-switch">
+                <label for="{{name}}" class="col-sm-3 col-form-label form-check-label fs-5">{{setting.name}}</label>
+                <div class="col-sm-9 d-flex align-items-center">
+                  <input
+                  name="{{name}}"
+                  class="form-check-input mx-4"
+                  style="height: 30px; width: 60px;"
+                  type="checkbox"
+                  role="switch"
+                  id="{{name}}"
+                  aria-labelledby="{{name}}Help"
+                  {% if setting.default %}checked{% endif %}>
+                </div>
+                <span id="{{name}}Help" class="form-text d-block mt-2">
+                  {{setting.description}}
+                </span>
+              </div>
+
+              {% elif setting.default.__class__.__name__ == "str" %}
+
+                <div class="row mb-5 form-switch">
+                  <label for="{{name}}" class="col-sm-3 col-form-label col-form-label-sm fs-5">{{setting.name}}</label>
+                  <div class="col-sm-5">
+                    <input name="{{name}}" id="{{name}}" value="{{setting.default}}" type="email" class="form-control form-control-sm">
+                  </div>
+                  <span id="{{name}}Help" class="form-text d-block mt-2">
+                    {{setting.description}}
+                  </span>
+                </div>
+
+              {% endif %}
+            {% endfor %}
+          </form>
+          <div class="d-flex row">
+            <button id="save" class="col btn btn-success text-white fs-5 px-4">Сохранить</button>
+            {% if not request.user.is_channel %}
+              {% if "moderation:read" in request.user.scopes and "channel:read:vips" in request.user.scopes %}
+                <a href="/api/create_channel" class="col btn btn-danger text-white fs-5 px-4 ms-4">Добавить бота на канал</a>
+              {% else %}
+                <button type="button" class="col btn btn-danger text-white fs-5 px-4 ms-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Добавить бота на канал</button>
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5 text-black" id="staticBackdropLabel">Добавление бота</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Для того чтобы ботом могли управлять ваши модераторы и vip-пользователи боту требуются
+                        дополнительные разрешения
+                      </div>
+                      <div class="modal-footer">
+                        <a href="/api/create_channel" type="button" class="btn btn-secondary">Всё равно добавить</a>
+                        <a href="/auth/?scopes=%5B%22moderation%3Aread%22%2C%20%22channel%3Aread%3Avips%22%5D" type="button" class="btn btn-primary text-white">Получить нужные разрешения</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endif %}
+            {% if request.user.is_channel or request.user.managing %}
+              <a href="/admin/{% if request.user.is_channel %}{{request.user.name}}{% else %}{{request.user.managing[0]}}{% endif %}"
+                 class="col btn btn-primary text-white fs-5 px-4 ms-4">В админ-панель <span class="ms-2">▶</span></a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/static/js/user_save.js"></script>
+{% endblock %}

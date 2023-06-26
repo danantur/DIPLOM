@@ -1,127 +1,45 @@
-from typing import Generic
+from starlette.applications import Starlette
+from starlette.middleware import Middleware
+from starlette.middleware.authentication import AuthenticationMiddleware
+from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
+from starlette.routing import Route, Mount
 
-import deta
-from fastapi_sessions.backends.session_backend import SessionModel, SessionBackend, BackendError
-from fastapi_sessions.frontends.session_frontend import ID
-from pydantic import BaseModel
-from fastapi import HTTPException, FastAPI, Response, Depends
-from uuid import UUID, uuid4
-
-from fastapi_sessions.backends.implementations import InMemoryBackend
-from fastapi_sessions.session_verifier import SessionVerifier
-from fastapi_sessions.frontends.implementations import SessionCookie, CookieParameters
-
-
-class SessionData(BaseModel):
-    token: str
+from bot.slon_bot import bot
+from db.auth import *
+from db.db import *
+from web.backend_views import create_channel, edit_user, edit_channel
+from web.front_views import *
 
 
-cookie_params = CookieParameters()
+async def setup_bot():
+    get_event_loop().create_task(bot.start())
 
-cookie = SessionCookie(
-    cookie_name="cookie",
-    identifier="general_verifier",
-    auto_error=True,
-    secret_key="DONOTUSE",
-    cookie_params=cookie_params,
+
+app = Starlette(
+    routes=[
+        Route("/", landing),
+        Route("/streamers", streamers),
+        Route("/about", about),
+        Route("/profile", profile),
+        Route("/admin/{channel:str}", admin),
+        Route("/commands/{channel:str}", commands),
+        Mount("/api", routes=[
+            Route("/create_channel", create_channel),
+            Route("/edit_user", edit_user, methods=["POST"]),
+            Route("/edit_channel/{channel:str}", edit_channel, methods=["POST"])
+        ]),
+        Mount("/auth", routes=[
+            Route("/", auth_redirect),
+            Route("/approve", auth_get),
+            Route("/approve", auth_post, methods=["POST"]),
+            Route("/logout", auth_logout),
+        ])
+    ],
+    on_startup=[on_start, setup_bot], on_shutdown=[on_clean],
+    middleware=[
+        Middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"]),
+        Middleware(SessionMiddleware, secret_key="(3QLX*z4yw6%(IR4"),
+        Middleware(AuthenticationMiddleware, backend=BasicAuthBackend(), on_error=on_auth_error)
+    ]
 )
-
-
-class TokensStorage(Generic[ID, SessionModel], SessionBackend[ID, SessionModel]):
-
-    def __init__(self) -> None:
-        self.data = deta.Base("tokens")
-
-    async def create(self, session_id: ID, data: SessionModel):
-
-        if self.data.get(str(session_id)):
-            raise BackendError("create can't overwrite an existing session")
-
-        self.data.put(data.copy(deep=True).dict(), str(session_id))
-
-    async def read(self, session_id: ID):
-        data = self.data.get(str(session_id))
-        if not data:
-            return
-
-        return data
-
-    async def update(self, session_id: ID, data: SessionModel) -> None:
-        if self.data.get(str(session_id)):
-            self.data.put(data.dict(), str(session_id))
-        else:
-            raise BackendError("session does not exist, cannot update")
-
-    async def delete(self, session_id: ID) -> None:
-        self.data.delete(str(session_id))
-
-
-backend = TokensStorage[UUID, SessionData]()
-
-
-class BasicVerifier(SessionVerifier[UUID, SessionData]):
-    def __init__(
-        self,
-        *,
-        identifier: str,
-        auto_error: bool,
-        back: TokensStorage[UUID, SessionData],
-        auth_http_exception: HTTPException,
-    ):
-        self._identifier = identifier
-        self._auto_error = auto_error
-        self._backend = back
-        self._auth_http_exception = auth_http_exception
-
-    @property
-    def identifier(self):
-        return self._identifier
-
-    @property
-    def backend(self):
-        return self._backend
-
-    @property
-    def auto_error(self):
-        return self._auto_error
-
-    @property
-    def auth_http_exception(self):
-        return self._auth_http_exception
-
-    def verify_session(self, model: SessionData) -> bool:
-        return True
-
-
-verifier = BasicVerifier(
-    identifier="general_verifier",
-    auto_error=True,
-    back=backend,
-    auth_http_exception=HTTPException(status_code=403, detail="invalid session"),
-)
-
-app = FastAPI()
-
-
-@app.get("/create_session/{name}")
-async def create_session(name: str, response: Response):
-
-    session = uuid4()
-    data = SessionData(token=name)
-
-    await backend.create(session, data)
-    cookie.attach_to_response(response, session)
-
-    return f"created session for {name}"
-
-
-@app.get("/whoami", dependencies=[Depends(cookie)])
-async def whoami(session_data: SessionData = Depends(verifier)):
-    return session_data
-
-
-@app.post("/delete_session")
-async def del_session(response: Response, session_id: UUID = Depends(cookie)):
-    await backend.delete(session_id)
-    cookie.delete_from_response(response)
-    return "deleted session"

@@ -1,0 +1,69 @@
+{% extends 'index.html' %}
+
+{% block links %}
+<link rel="stylesheet" href="static/css/landing.css">
+{% endblock %}
+
+{% block title %}О нас{% endblock %}
+
+{% block content %}
+{% include 'components/page_header.html' %}
+  <div class="container mx-auto">
+    <div class="row g-3 py-3 justify-content-center">
+
+      <div class="col-md-6">
+        <div class="card">
+        <h5 class="card-header">История создания</h5>
+        <div class="card-body">
+          <p class="card-text">
+            Данный проект изначально разрабатывался сугубо ради изучения языка программирования.
+            Но впоследствии он был доработан как полноценный проект со этим сайтом.</p>
+          <p class="card-text">
+            Название проекта связано со стримером, а конкретно с кличкой его питомца в игре minecraft.</p>
+        </div>
+      </div>
+        </div>
+
+      <div class="col-md-2">
+      <div class="card border-primary mb-3 bg-dark">
+        <div class="card-header text-white">Почта для обратной связи</div>
+        <div class="card-body text-primary">
+          <p class="card-text">slon.bot.00@mail.ru</p>
+        </div>
+      </div>
+        </div>
+
+      <div class="col-md-6">
+        <div class="card">
+        <h5 class="card-header">Наши принципы</h5>
+        <div class="card-body">
+          <p class="card-text">
+            Мы создаём сервис для свободного пользования желающими.
+            При этом мы учитываем все ваши предпочтения и выражаем их в коде.</p>
+          <p class="card-text">
+            Однако поддержание проекта в рабочем состоянии требует денежных средств, поэтому он может в любой момент перестать работать.
+            По этой причине в будущем он может быть монетизирован для работы серверов.
+          </p>
+        </div>
+      </div>
+
+        </div>
+
+      <div class="col-md-2">
+        <div class="card">
+        <h5 class="card-header">Пожертвования</h5>
+        <div class="card-body">
+          <a href="https://www.donationalerts.com/r/danantur" class="card-title">
+            DonationAlerts
+          </a>
+        </div>
+      </div>
+
+
+        </div>
+
+    </div>
+
+  </div>
+{% include 'components/footer.html' %}
+{% endblock %}
